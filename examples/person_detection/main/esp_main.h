@@ -20,7 +20,7 @@
 
 #if !defined(CLI_ONLY_INFERENCE)
 // support added only for S3-EYE or boards with exact display config
-// #define DISPLAY_SUPPORT 1 // uncomment to enable display support
+#define DISPLAY_SUPPORT 1 // uncomment to enable display support
 #endif
 
 #ifdef __cplusplus

@@ -22,6 +22,8 @@ limitations under the License.
 #include "detection_responder.h"
 #include "tensorflow/lite/micro/micro_log.h"
 
+#include "lvgl.h"
+
 #include "esp_main.h"
 #if DISPLAY_SUPPORT
 #include "image_provider.h"
@@ -30,8 +32,8 @@ limitations under the License.
 // static QueueHandle_t xQueueLCDFrame = NULL;
 
 static lv_obj_t *camera_canvas = NULL;
-#define IMG_WD (96 * 2)
-#define IMG_HT (120 * 2)
+#define IMG_WD (240)
+#define IMG_HT (320)
 #endif
 
 void RespondToDetection(float person_score, float no_person_score) {
@@ -46,21 +48,27 @@ void RespondToDetection(float person_score, float no_person_score) {
       bsp_display_lock(0);
       camera_canvas = lv_canvas_create(lv_scr_act());
       assert(camera_canvas);
-      lv_obj_center(camera_canvas);
+      // lv_obj_center(camera_canvas);
       bsp_display_unlock();
     }
 
     uint16_t *buf = (uint16_t *) image_provider_get_display_buf();
 
-    int color = 0x1f << 6; // red
-    if (person_score_int < 60) { // treat score less than 60% as no person
-      color = 0x3f; // green
+    uint16_t blue =  0xf800;
+    uint16_t green = 0x07e0;
+    uint16_t red =   0x001f;
+    int color = green;
+    if (person_score_int > 80) {
+      color = red;
     }
-    for (int i = 192 * 192; i < 192 * 240; i++) {
+    for (int i = 192 * 240; i < 320 * 240; i++) {
         buf[i] = color;
     }
+
     bsp_display_lock(0);
+    #define LV_IMG_CF_TRUE_COLOR LV_COLOR_FORMAT_RGB565
     lv_canvas_set_buffer(camera_canvas, buf, IMG_WD, IMG_HT, LV_IMG_CF_TRUE_COLOR);
+
     bsp_display_unlock();
 #else
   if (xQueueLCDFrame == NULL) {

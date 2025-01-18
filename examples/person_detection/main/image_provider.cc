@@ -43,7 +43,7 @@ TfLiteStatus InitCamera() {
 // if display support is present, initialise display buf
 #if DISPLAY_SUPPORT
   if (display_buf == NULL) {
-    display_buf = (uint16_t *) heap_caps_malloc(96 * 2 * 120 * 2 * 2, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    display_buf = (uint16_t *) heap_caps_malloc(240 * 320 * 2, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
   }
   if (display_buf == NULL) {
     ESP_LOGE(TAG, "Couldn't allocate display buffer");
@@ -102,10 +102,14 @@ TfLiteStatus GetImage(int image_width, int image_height, int channels, int8_t* i
       image_data[i * kNumCols + j] = grey_pixel;
 
       // to display
-      display_buf[2 * i * kNumCols * 2 + 2 * j] = pixel;
-      display_buf[2 * i * kNumCols * 2 + 2 * j + 1] = pixel;
-      display_buf[(2 * i + 1) * kNumCols * 2 + 2 * j] = pixel;
-      display_buf[(2 * i + 1) * kNumCols * 2 + 2 * j + 1] = pixel;
+      // display_buf[2 * i * kNumCols * 2 + 2 * j] = pixel;
+      // display_buf[2 * i * kNumCols * 2 + 2 * j + 1] = pixel;
+      // display_buf[(2 * i + 1) * kNumCols * 2 + 2 * j] = pixel;
+      // display_buf[(2 * i + 1) * kNumCols * 2 + 2 * j + 1] = pixel;
+
+      uint16_t newpixel = ((pixel & 0xFF) << 8) | (pixel >> 8);
+      display_buf[i * 240 + j] = newpixel;
+
     }
   }
 #else

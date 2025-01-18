@@ -6,7 +6,12 @@ dependencies:
   espressif/esp32-camera:
     version: "*"
 
-  espressif/esp32_s3_eye:
+  # espressif/esp32_s3_eye:
+  #   version: "*"
+  #   rules:
+  #     - if: "target in [esp32s3]"
+
+  espressif/esp_bsp_generic:
     version: "*"
     rules:
       - if: "target in [esp32s3]"

@@ -14,6 +14,8 @@ limitations under the License.
 ==============================================================================*/
 
 #include "main_functions.h"
+#include "esp_timer.h"
+#include "driver/gpio.h"
 
 #include "detection_responder.h"
 #include "image_provider.h"
@@ -204,4 +206,7 @@ void run_inference(void *ptr) {
   float no_person_score_f =
       (no_person_score - output->params.zero_point) * output->params.scale;
   RespondToDetection(person_score_f, no_person_score_f);
+
+
+  
 }

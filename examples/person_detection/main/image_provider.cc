@@ -108,7 +108,12 @@ TfLiteStatus GetImage(int image_width, int image_height, int channels, int8_t* i
       // display_buf[(2 * i + 1) * kNumCols * 2 + 2 * j + 1] = pixel;
 
       uint16_t newpixel = ((pixel & 0xFF) << 8) | (pixel >> 8);
-      display_buf[i * 240 + j] = newpixel;
+      // display_buf[i * 240 + j] = newpixel;
+
+      display_buf[2 * i * 240 + 2 * j] = newpixel;
+      display_buf[2 * i * 240 + 2 * j + 1] = newpixel;
+      display_buf[(2 * i + 1) * 240 + 2 * j] = newpixel;
+      display_buf[(2 * i + 1) * 240 + 2 * j + 1] = newpixel;
 
     }
   }

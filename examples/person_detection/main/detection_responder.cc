@@ -95,7 +95,7 @@ void RespondToDetection(float person_score, float no_person_score) {
               person_score_int, 100 - person_score_int);
 
 
-  if (person_score_int > 90) {
+  if (person_score_int > 48) {
         MicroPrintf("Face detected");
 	      gpio_set_level(GPIO_NUM_1, 1);
 	      MicroPrintf("light on");

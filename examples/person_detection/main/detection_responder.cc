@@ -21,6 +21,7 @@ limitations under the License.
 
 #include "detection_responder.h"
 #include "tensorflow/lite/micro/micro_log.h"
+#define portTICK_RATE_MS 25
 
 #include "lvgl.h"
 
@@ -94,16 +95,17 @@ void RespondToDetection(float person_score, float no_person_score) {
               person_score_int, 100 - person_score_int);
 
 
-  if (person_score_int > 46) {
+  if (person_score_int > 90) {
         MicroPrintf("Face detected");
-	      gpio_set_level(GPIO_NUM_1, 1);
+	      gpio_set_level(GPIO_NUM_36, 1);
 	      MicroPrintf("light on");
-        esp_deep_sleep(200000); 
-        gpio_set_level(GPIO_NUM_1, 0);
+        vTaskDelay(pdMS_TO_TICKS(100));
+        gpio_set_level(GPIO_NUM_36, 0);
+        vTaskDelay(pdMS_TO_TICKS(100));
     // }else{
     // 	gpio_set_level(GPIO_NUM_1, 0);
 	  //   MicroPrintf("light off");
     // }
   
-
+  }
 }

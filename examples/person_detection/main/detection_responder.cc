@@ -19,6 +19,7 @@ limitations under the License.
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#define THRESHOLD 40
 #include "detection_responder.h"
 #include "tensorflow/lite/micro/micro_log.h"
 #define portTICK_RATE_MS 25
@@ -29,6 +30,7 @@ limitations under the License.
 #if DISPLAY_SUPPORT
 #include "image_provider.h"
 #include <bsp/esp-bsp.h>
+char abcdefg[4];
 // #include "esp_lcd.h"
 // static QueueHandle_t xQueueLCDFrame = NULL;
 
@@ -59,7 +61,7 @@ void RespondToDetection(float person_score, float no_person_score) {
     uint16_t green = 0x07e0;
     uint16_t red =   0x001f;
     int color = green;
-    if (person_score_int > 80) {
+    if (person_score_int > THRESHOLD) {
       color = red;
     }
     for (int i = 192 * 240; i < 320 * 240; i++) {
@@ -68,7 +70,12 @@ void RespondToDetection(float person_score, float no_person_score) {
 
     bsp_display_lock(0);
     #define LV_IMG_CF_TRUE_COLOR LV_COLOR_FORMAT_RGB565
+    
+    
     lv_canvas_set_buffer(camera_canvas, buf, IMG_WD, IMG_HT, LV_IMG_CF_TRUE_COLOR);
+
+  
+   
 
     bsp_display_unlock();
 #else
@@ -93,9 +100,10 @@ void RespondToDetection(float person_score, float no_person_score) {
 #endif
   MicroPrintf("person score:%d%%, no person score %d%%",
               person_score_int, 100 - person_score_int);
+  
 
 
-  if (person_score_int > 48) {
+  if (person_score_int > THRESHOLD) {
         MicroPrintf("Face detected");
 	      gpio_set_level(GPIO_NUM_1, 1);
 	      MicroPrintf("light on");
@@ -106,6 +114,6 @@ void RespondToDetection(float person_score, float no_person_score) {
     // 	gpio_set_level(GPIO_NUM_1, 0);
 	  //   MicroPrintf("light off");
     // }
-  
+
   }
 }

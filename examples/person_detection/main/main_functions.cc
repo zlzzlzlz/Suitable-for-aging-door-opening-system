@@ -16,6 +16,7 @@ limitations under the License.
 #include "main_functions.h"
 #include "esp_timer.h"
 #include "driver/gpio.h"
+#include <stdio.h>
 
 #include "detection_responder.h"
 #include "image_provider.h"

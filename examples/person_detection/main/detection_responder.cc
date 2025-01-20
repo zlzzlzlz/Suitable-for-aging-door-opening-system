@@ -69,6 +69,31 @@ void RespondToDetection(float person_score, float no_person_score) {
     #define LV_IMG_CF_TRUE_COLOR LV_COLOR_FORMAT_RGB565
     lv_canvas_set_buffer(camera_canvas, buf, IMG_WD, IMG_HT, LV_IMG_CF_TRUE_COLOR);
 
+    // lv_style_t style;
+    // lv_style_init(&style);
+    // lv_style_set_text_color(&style, LV_STATE_DEFAULT, lv_color_black());
+    // // lv_style_set_text_font(&style, LV_STATE_DEFAULT, &lv_font_montserrat_14);
+    // lv_canvas_draw_text(camera_canvas, 0, 0, IMG_WD, &style, 
+    //     "person socre " + person_score_int, LV_LABEL_ALIGN_LEFT)
+
+    // lv_obj_t * label = lv_label_create(lv_scr_act());
+    // // 设置标签的位置和大小
+    // lv_obj_set_pos(label, 128, 240);
+    // lv_obj_set_size(label, 192, 64);
+    // // 使用 lv_label_set_text 函数设置标签的文本内容
+    // lv_label_set_text(label, "person socre " + person_score_int);
+
+
+    lv_obj_t * textarea = lv_textarea_create(lv_scr_act());
+    // 设置文本区域的位置和大小
+    lv_obj_set_pos(textarea, 0, 192);
+    lv_obj_set_size(textarea, 192, 64);
+    char texts[30];
+    sprintf(texts, "person socre %d", person_score_int);
+    // 使用 lv_textarea_set_text 函数设置文本区域的内容
+    lv_textarea_set_text(textarea, texts);
+
+
     bsp_display_unlock();
 #else
   if (xQueueLCDFrame == NULL) {

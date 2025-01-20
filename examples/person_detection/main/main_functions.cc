@@ -14,6 +14,9 @@ limitations under the License.
 ==============================================================================*/
 
 #include "main_functions.h"
+#include "esp_timer.h"
+#include "driver/gpio.h"
+#include <stdio.h>
 
 #include "detection_responder.h"
 #include "image_provider.h"
@@ -59,6 +62,7 @@ static uint8_t *tensor_arena;//[kTensorArenaSize]; // Maybe we should move this 
 void setup() {
   // Map the model into a usable data structure. This doesn't involve any
   // copying or parsing, it's a very lightweight operation.
+  gpio_set_direction(GPIO_NUM_1, GPIO_MODE_OUTPUT); 
   model = tflite::GetModel(g_person_detect_model_data);
   if (model->version() != TFLITE_SCHEMA_VERSION) {
     MicroPrintf("Model provided is schema version %d not equal to supported "
@@ -204,4 +208,7 @@ void run_inference(void *ptr) {
   float no_person_score_f =
       (no_person_score - output->params.zero_point) * output->params.scale;
   RespondToDetection(person_score_f, no_person_score_f);
+
+
+  
 }

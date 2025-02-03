@@ -1,4 +1,14 @@
 *__介绍请看Relese分支！__*
+
+__lezhi__ Release this code.
+
+*___Welcome to visit [my blog](zlzlezhi.github.io)!___*
+
+
+这个项目可以用于老式门铃改造，ESP32本地人形识别自动开门。
+
+---
+
 # TensorFlow Lite Micro for Espressif Chipsets
 
 [![Component Registry](https://components.espressif.com/components/espressif/esp-tflite-micro/badge.svg)](https://components.espressif.com/components/espressif/esp-tflite-micro)

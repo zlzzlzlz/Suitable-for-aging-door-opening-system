@@ -2,7 +2,7 @@
 
 __lezhi__ Release this code.
 
-*___Welcome to visit [my blog](zlzlezhi.github.io)!___*
+*___Welcome to visit [my blog](https://zlzlezhi.github.io/)!___*
 
 
 这个项目可以用于老式门铃改造，ESP32本地人形识别自动开门。
